@@ -19,34 +19,32 @@ class FotoInfo extends Component {
         return (
             <div className="foto-in fo">
               <div className="foto-info-likes">
+                  {
+                    this.props.foto.likers.map(liker => {
+                      return (
+                      <a href="#">{liker.login}</a>
+                      )
 
-                <a href="#">
-                  alots_ssa
-                </a>
-                ,
-                <a href="#">
-                  rafael_rollo
-                </a> 
-                 curtiram
+                    })
+                  } curtiram
               </div>
               <p className="foto-info-legenda">
                 <a className="foto-info-autor">autor </a>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, illo?
+                {this.props.foto.comentario}
               </p>
 
               <ul className="foto-info-comentarios">
-                <li className="comentario">
-                  <a className="foto-info-autor">seguidor </a>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem ad, molestiae.
-                </li>
-                <li className="comentario">
-                  <a className="foto-info-autor">seguidor </a>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt cumque earum molestias voluptatem modi nihil sit magnam ratione eveniet distinctio magni error asperiores dignissimos tempora expedita, laborum ex soluta hic maiores veritatis deserunt.
-                </li>
-                <li className="comentario">
-                  <a className="foto-info-autor">seguidor </a>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum laudantium quae ab fuga odio delectus maiores voluptatibus sit commodi quidem.
-                </li>
+                {
+                  this.props.foto.comentarios.map(coment =>{
+                    return (
+
+                  <li className="comentario">
+                    <a className="foto-info-autor">{coment.login} </a>
+                      {coment.texto}
+                  </li>
+                    )
+                  })
+                }
               </ul>
             </div>            
         );
@@ -58,26 +56,26 @@ class FotoHeader extends Component {
         return (
             <header className="foto-header">
               <figure className="foto-usuario">
-              <img src="http://s2.glbimg.com/n7UxqIH_7weJ1aBpswAQjgTW0rk=/s.glbimg.com/et/pr/f/original/2014/07/29/emicida_bast2.jpg" alt="foto do usuario"/>
+              <img src={this.props.foto.urlPerfil} alt="foto do usuario"/>
                 <figcaption className="foto-usuario">
                   <a href="#">
-                    alots
+                    {this.props.foto.loginUsuario}
                   </a>  
                 </figcaption>
               </figure>
-              <time className="foto-data">03/10/2016 20:13</time>
+            <time className="foto-data">{this.props.foto.horario}</time>
             </header>            
         );
     }
 }
 
-export default class Foto extends Component {
+export default class FotoItem extends Component {
     render(){
         return (
           <div className="foto">
-            <FotoHeader/>
-            <img alt="foto" className="foto-src" src="https://www.telegraph.co.uk/content/dam/Travel/2017/December/prague-night-charles-bridge.jpg?imwidth=450"/>
-            <FotoInfo/>
+            <FotoHeader foto={this.props.foto}/>
+            <img alt="foto" className="foto-src" src={this.props.foto.urlFoto}/>
+            <FotoInfo foto={this.props.foto}/>
             <FotoAtualizacoes/>
           </div>            
         );
