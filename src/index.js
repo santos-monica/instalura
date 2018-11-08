@@ -1,25 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Route, BrowserRouter, Switch, Redirect} from 'react-router-dom';
+import { Route, BrowserRouter, Switch, Redirect, matchPath} from 'react-router-dom';
 import Login from './components/Login';
-import Timeline from './components/Timeline';
-import Logout from './components/Logout'
+import App from './App';
+import Logout from './components/Logout';
 import './css/timeline.css';
 import './css/reset.css';
 import './css/login.css';
 
-const verificaAutorizacao = () => {
-    if(localStorage.getItem('auth-token') === null) {
-        return <Redirect to={
-            { 
-                pathname: '/', 
-                state: { 
-                    msg: 'voce precisa estar logado para acessar o endereço' 
-                    }
-            }
-        } />
+function verificaAutenticacao(nextState, replace) {
+    const match = matchPath('/timeline', {
+        path: nextState.match.url,
+        exact: true
+    });
+    console.log(nextState);
+    
+    let valida = false
+    if (match !== null) {
+        valida = match.isExact
     }
-    return <Timeline />
+
+    if (valida && localStorage.getItem('auth-token') === null) {
+        return <Redirect to={{
+            pathname: '/',
+            state: { msg: 'Faça login para acessar esta página' }
+        }} />
+    }
+    return <App login={nextState.match.params.login} />
 }
 
 ReactDOM.render((
@@ -27,8 +34,8 @@ ReactDOM.render((
         <div>
             <Switch>
                 <Route exact path="/" component={Login}/>
-                <Route path="/timeline" render={verificaAutorizacao}/>
-                <Route path="/logout" component={Logout}/>
+                <Route path="/timeline/:login?" render={verificaAutenticacao} />
+                <Route exact path="/logout" component={Logout}/>
             </Switch>
         </div>
     </BrowserRouter>
