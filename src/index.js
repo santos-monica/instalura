@@ -8,12 +8,11 @@ import './css/timeline.css';
 import './css/reset.css';
 import './css/login.css';
 
-function verificaAutenticacao(nextState, replace) {
+function verificaAutenticacao(nextState) {
     const match = matchPath('/timeline', {
         path: nextState.match.url,
         exact: true
     });
-    console.log(nextState);
     
     let valida = false
     if (match !== null) {

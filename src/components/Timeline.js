@@ -15,7 +15,6 @@ export default class Timeline extends Component {
         } else {
             urlPerfil = `https://instalura-api.herokuapp.com/api/public/fotos/${this.login}`
         }
-        console.log(urlPerfil);
         fetch(urlPerfil)
         .then(res => res.json())
         .then(fotos => {
