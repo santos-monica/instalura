@@ -9,7 +9,8 @@ class FotoAtualizacoes extends Component {
 
 	comenta(event) {
 		event.preventDefault();
-		this.props.comenta(this.props.foto.id, this.comentario.value)
+		this.props.comenta(this.props.foto.id, this.comentario.value);
+		this.comentario.value = '';
 	}
 	
 	render() {
